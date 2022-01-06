@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gimme_cocktail/vo/cocktail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,11 +29,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  Cocktail _cocktail = new Cocktail();
 
-  void _incrementCounter() {
+  void _getCocktail() {
     setState(() {
-      _counter++;
+      _cocktail.setTest();
     });
   }
 
@@ -44,20 +45,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+          children: [
+            Text("yes"),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _getCocktail,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
