@@ -1,5 +1,10 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:gimme_cocktail/vo/cocktail.dart';
+import 'package:gimme_cocktail/widget/cocktail_card.dart';
+import 'package:gimme_cocktail/network/network_connection.dart'
+    as networkConnection;
 
 void main() {
   runApp(const MyApp());
@@ -29,12 +34,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Cocktail _cocktail = new Cocktail();
+  late Future<Cocktail> cocktail;
 
-  void _getCocktail() {
-    setState(() {
-      _cocktail.setTest();
-    });
+  void _reload() {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cocktail = networkConnection.getCocktail();
   }
 
   @override
@@ -46,12 +55,26 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: [
-            Text("yes"),
+            Column(
+              children: [
+                FutureBuilder<Cocktail>(
+                  future: cocktail,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return CocktailCard(cocktail: snapshot.data!);
+                    } else if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    }
+                    return const CircularProgressIndicator();
+                  },
+                )
+              ],
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _getCocktail,
+        onPressed: _reload,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
