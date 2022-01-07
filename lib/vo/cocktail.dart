@@ -1,33 +1,32 @@
 class Cocktail {
-  String name = "";
-  String isAlcoholic = "";
-  String instructions = "";
-  String drinkThumb = "";
-  String ingredient1 = "";
-  String ingredient2 = "";
-  String ingredient3 = "";
-  String measure1 = "";
-  String measure2 = "";
-  String measure3 = "";
+  String _name = "";
+  String _isAlcoholic = "";
+  String _instructions = "";
+  String _drinkThumb = "";
+  String _ingredient1 = "";
+  String _ingredient2 = "";
+  String _measure1 = "";
+  String _measure2 = "";
 
-  Cocktail();
+  get name {
+    return _name;
+  }
 
-  void setTest() {
-    name = "Whitecap Margarita";
-    isAlcoholic = "Alcoholic";
-    instructions =
-        "Place all ingredients in a blender and blend until smooth. This makes one drink.";
+  get isAlcoholic {
+    return _isAlcoholic;
+  }
+
+  get drinkThumb {
+    return _drinkThumb;
   }
 
   Cocktail.fromJson(Map<String, dynamic> json)
-      : name = json['strDrink'],
-        isAlcoholic = json['strAlcoholic'],
-        instructions = json['strInstructions'],
-        drinkThumb = json['strDrinkThumb'],
-        ingredient1 = json['strIngredient1'],
-        ingredient2 = json['strIngredient2'],
-        ingredient3 = json['strIngredient3'],
-        measure1 = json['strMeasure1'],
-        measure2 = json['strMeasure2'],
-        measure3 = json['strMeasure3'];
+      : _name = json['strDrink'],
+        _isAlcoholic = json['strAlcoholic'],
+        _instructions = json['strInstructions'],
+        _drinkThumb = json['strDrinkThumb'],
+        _ingredient1 = json['strIngredient1'],
+        _ingredient2 = json['strIngredient2'],
+        _measure1 = json['strMeasure1'],
+        _measure2 = json['strMeasure2'];
 }
