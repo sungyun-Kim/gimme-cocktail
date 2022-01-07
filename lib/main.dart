@@ -1,10 +1,8 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:gimme_cocktail/vo/cocktail.dart';
 import 'package:gimme_cocktail/widget/cocktail_card.dart';
 import 'package:gimme_cocktail/network/network_connection.dart'
-    as networkConnection;
+    as network_connection;
 
 void main() {
   runApp(const MyApp());
@@ -16,11 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'GimmeCocktail',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'GimmeCocktail'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -37,13 +36,15 @@ class _MyHomePageState extends State<MyHomePage> {
   late Future<Cocktail> cocktail;
 
   void _reload() {
-    setState(() {});
+    setState(() {
+    cocktail = network_connection.getCocktail();
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    cocktail = networkConnection.getCocktail();
+    cocktail = network_connection.getCocktail();
   }
 
   @override
@@ -75,8 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _reload,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        tooltip: 'refresh',
+        child: const Icon(Icons.refresh),
       ),
     );
   }

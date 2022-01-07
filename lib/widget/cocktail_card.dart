@@ -17,7 +17,7 @@ class CocktailCard extends StatelessWidget {
             Image.network(cocktail.drinkThumb,
                 loadingBuilder: (context, child, loadingProgress) {
                   if(loadingProgress == null) return child;
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 })
           ],
         ),
