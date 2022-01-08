@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'GimmeCocktail',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        backgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black,
+        fontFamily: 'HeirofLight',
       ),
       home: const MyHomePage(title: 'GimmeCocktail'),
       debugShowCheckedModeBanner: false,
@@ -37,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _reload() {
     setState(() {
-    cocktail = network_connection.getCocktail();
+      cocktail = network_connection.getCocktail();
     });
   }
 
@@ -49,29 +52,50 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Column(
-              children: [
-                FutureBuilder<Cocktail>(
-                  future: cocktail,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return CocktailCard(cocktail: snapshot.data!);
-                    } else if (snapshot.hasError) {
-                      return Text(snapshot.error.toString());
-                    }
-                    return const CircularProgressIndicator();
-                  },
-                )
-              ],
-            )
-          ],
+      appBar: PreferredSize(
+          child: AppBar(
+            leading: const IconButton(onPressed: null, icon: Icon(Icons.menu)),
+            actions: const [
+              IconButton(onPressed: null, icon: Icon(Icons.call)),
+            ],
+            title: Container(
+              padding: const EdgeInsets.all(16),
+              child: const Text(
+                "Kim",
+                style: TextStyle(fontSize: 32),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.black,
+            elevation: 0,
+          ),
+          preferredSize: Size.fromHeight(mediaQuery.size.height * 0.05)),
+      body: Container(
+        padding: const EdgeInsets.all(8),
+        child: Center(
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  FutureBuilder<Cocktail>(
+                    future: cocktail,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return CocktailCard(cocktail: snapshot.data!);
+                      } else if (snapshot.hasError) {
+                        return Text(snapshot.error.toString());
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

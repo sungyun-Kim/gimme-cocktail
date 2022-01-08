@@ -24,5 +24,5 @@ class Cocktail {
         _instructions = json['strInstructions'],
         _drinkThumb = json['strDrinkThumb'],
         _ingredient1 = json['strIngredient1'],
-        _ingredient2 = json['strIngredient2'],
+        _ingredient2 = json['strIngredient2'];
 }
