@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gimme_cocktail/page/main_page.dart';
+import 'package:gimme_cocktail/page/random_cocktail_page.dart';
 import 'package:gimme_cocktail/vo/cocktail.dart';
 import 'package:gimme_cocktail/widget/cocktail_card.dart';
 import 'package:gimme_cocktail/network/network_connection.dart'
@@ -14,14 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GimmeCocktail',
+      title: 'seongyeon kim',
       theme: ThemeData(
         brightness: Brightness.dark,
         backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.black,
         fontFamily: 'HeirofLight',
       ),
-      home: const MyHomePage(title: 'GimmeCocktail'),
+      home: const MyHomePage(title: 'seongyeon kim'),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -55,49 +57,34 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
-      appBar: PreferredSize(
-          child: AppBar(
-            leading: const IconButton(onPressed: null, icon: Icon(Icons.menu)),
-            actions: const [
-              IconButton(onPressed: null, icon: Icon(Icons.call)),
-            ],
-            title: Container(
-              padding: const EdgeInsets.all(16),
-              child: const Text(
-                "Kim",
-                style: TextStyle(fontSize: 32),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.black,
-            elevation: 0,
-          ),
-          preferredSize: Size.fromHeight(mediaQuery.size.height * 0.05)),
-      body: Container(
-        padding: const EdgeInsets.all(8),
-        child: Center(
-          child: Column(
-            children: [
-              Column(
-                children: [
-                  FutureBuilder<Cocktail>(
-                    future: cocktail,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return CocktailCard(cocktail: snapshot.data!);
-                      } else if (snapshot.hasError) {
-                        return Text(snapshot.error.toString());
-                      }
-                      return const CircularProgressIndicator();
-                    },
-                  )
-                ],
-              )
-            ],
-          ),
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+        child: ListView(
+          children: const [
+            DrawerHeader(child: Text("ksy Drawer")),
+          ],
         ),
       ),
+      body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: mediaQuery.size.height * 0.05,
+                backgroundColor: Colors.black,
+                pinned: true,
+                floating: true,
+                snap: true,
+                flexibleSpace: const FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Text('sykim playground'),
+                ),
+              ),
+            ];
+          },
+          body: PageView(
+            controller: pageController,
+            children: const [MainPage(), RandomCocktailPage()],
+          )),
       floatingActionButton: FloatingActionButton(
         onPressed: _reload,
         tooltip: 'refresh',
@@ -105,4 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  final pageController = PageController(
+    initialPage: 0,
+  );
 }
